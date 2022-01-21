@@ -5,7 +5,7 @@
 
 In the project directory, you can run:
 
-### `npm i` or ### `npm install`
+### `npm i` or `npm install`
 It will install node_modules folder
 requied by React DOM app to run
 
