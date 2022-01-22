@@ -14,7 +14,7 @@ export default function Navbar(props) {
                         <a className="nav-link active" aria-current="page" href="/" >Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/" >About</a>
+                        <a className="nav-link" href="/" >{props.About}</a>
                     </li>
                 </ul>
 
@@ -27,4 +27,7 @@ export default function Navbar(props) {
     </nav>;
 }
 Navbar.propTypes = { title: PropTypes.string };
-Navbar.defaultProps = { title: "Set Title here" };
+Navbar.defaultProps = {
+    title: "Set Title here",
+    About: "About us"
+};
