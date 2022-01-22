@@ -1,40 +1,78 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 
 
 export default function TextForm(props) {
-    const handleUpClick =()=>{
-        // console.log("Upper case is clicked"+text);
+    const handleCopyClick = () => {
+        let text = document.getElementById('myBox');
+        text.select();
+        navigator.clipboard.writeText(text.value);
+        console.log(typeof text)
+
+    }
+    const removeExtraSpace = () => {
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "))
+    }
+    const handleUpClick = () => {
         let newText = text.toUpperCase();
         setText(newText);
     }
-    const handleLowClick =()=>{        
+    const handleLowClick = () => {
         let newText = text.toLowerCase();
         setText(newText);
     }
-    const handleOnChange =(event)=>{
-        // console.log("Change");
+    const handleJoinClick = () => {
+        // setText(text.trim());
+        // console.log(typeof text);
+        // let newText = text.split(" ");
+        // console.log(typeof newText);
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(""))
+
+    }
+    const handleTrimClick = () => {
+        setText(text.trim());
+        console.log(text);
+    }
+    const handleOnChange = (event) => {
         setText(event.target.value)
     }
-    const [text,setText]=useState('');
+    const handlecleanClick = () => {
+        setText("");
+    }
+    const getWords = () => {
+        if (text === "") {
+            return 0;
+        } else {
+            return text.split(" ").length;
+        }
+
+    }
+    const [text, setText] = useState('');
     // text = "New text"; // Wrong way to change the text
     // setText("");// correct way to cghange the text
     return (
         <>
-        <div className='container'>            
-            <h1>{props.heading}</h1>
-            <div className="mb-3">             
-                <textarea className="form-control" placeholder='Enter Text here' value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+            <div className='container' style={{ color: props.mode === 'light' ? '#002356' : 'white' }}>
+                <h1 >{props.heading}</h1>
+                <div className="mb-3">
+                    <textarea style={{ backgroundColor: props.mode === 'light' ? 'white' : '#292a2e',color: props.mode === 'light' ? 'black' : 'white'}} className="form-control" placeholder='Enter Text here' value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+                </div>{/*  onChange method is requied because it will not be  editable if we specify value as a state variable(state variable can onlh be change by using the setText method) */}
+                <button className="btn btn-primary mx-1 mt-2" onClick={handleUpClick}>UPPERCASE</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={handleLowClick}>lowercase</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={handlecleanClick}>clear</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={handleTrimClick}>Trim</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={handleJoinClick}>Join</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={handleCopyClick}>Copy</button>
+                <button className="btn btn-primary mx-1 mt-2" onClick={removeExtraSpace}>Remove Extra Space</button>
             </div>
-            <button className="btn btn-primary mx-1" onClick={handleUpClick}>UPPERCASE</button>
-            <button className="btn btn-primary mx-1" onClick={handleLowClick}>lowercase</button>
-        </div>
-        <div className="container my-4">
-            <h1>Your text summery</h1>
-            <p>{text.split(" ").length} words and {text.length} characters</p>
-            <p>{0.008*text.split(" ").length} Minutes to read </p>
-            <h3> Preview </h3>
-            <p>{text}</p>
-        </div>
+            <div className="container my-4" style={{ color: props.mode === 'light' ? '#002356' : 'white'}}>
+                <h1>Your text summery</h1>
+                <p>{getWords()} words and {text.length} characters</p>
+                <p>{0.008 * text.split(" ").length} Minutes to read </p>
+                <h3> Preview </h3>
+                <p>{text.length>0?text:'Enter Something to preview!'}</p>
+            </div>
         </>
     )
 }
