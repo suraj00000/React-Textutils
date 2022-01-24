@@ -6,20 +6,23 @@ export default function TextForm(props) {
         let text = document.getElementById('myBox');
         text.select();
         navigator.clipboard.writeText(text.value);
-        console.log(typeof text)
+        props.showAlert("Copied to clipboard","success");
 
     }
     const removeExtraSpace = () => {
         let newText = text.split(/[ ]+/);
         setText(newText.join(" "))
+        props.showAlert("Extraspaces removed","success");
     }
     const handleUpClick = () => {
         let newText = text.toUpperCase();
         setText(newText);
+        props.showAlert("Converted into Uppercase","success");
     }
     const handleLowClick = () => {
         let newText = text.toLowerCase();
         setText(newText);
+        props.showAlert("Converted into Lowercase","success");
     }
     const handleJoinClick = () => {
         // setText(text.trim());
@@ -28,17 +31,20 @@ export default function TextForm(props) {
         // console.log(typeof newText);
         let newText = text.split(/[ ]+/);
         setText(newText.join(""))
+        props.showAlert("words joined","success");
 
     }
     const handleTrimClick = () => {
         setText(text.trim());
         console.log(text);
+        props.showAlert("Text trimed","success");
     }
     const handleOnChange = (event) => {
         setText(event.target.value)
     }
     const handlecleanClick = () => {
         setText("");
+        props.showAlert("Text cleaned","success");
     }
     const getWords = () => {
         if (text === "") {
