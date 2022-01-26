@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 
 export default function TextForm(props) {
     const handleCopyClick = () => {
-        let text = document.getElementById('myBox');
-        text.select();
-        navigator.clipboard.writeText(text.value);
+        navigator.clipboard.writeText(text);
         props.showAlert("Copied to clipboard","success");
 
     }
@@ -25,10 +23,6 @@ export default function TextForm(props) {
         props.showAlert("Converted into Lowercase","success");
     }
     const handleJoinClick = () => {
-        // setText(text.trim());
-        // console.log(typeof text);
-        // let newText = text.split(" ");
-        // console.log(typeof newText);
         let newText = text.split(/[ ]+/);
         setText(newText.join(""))
         props.showAlert("words joined","success");
@@ -50,7 +44,7 @@ export default function TextForm(props) {
         if (text === "") {
             return 0;
         } else {
-            return text.split(" ").filter((element)=>{return element.length!==0}).length;
+            return text.split("/\s+/").filter((element)=>{return element.length!==0}).length;
         }
 
     }
@@ -74,8 +68,8 @@ export default function TextForm(props) {
             </div>
             <div className="container my-4" style={{ color: props.mode === 'light' ? '#002356' : 'white'}}>
                 <h1>Your text summery</h1>
-                <p>{getWords()} words and {text.length} characters</p>
-                <p>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes to read </p>
+                <p>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
+                <p>{0.008 * text.split().filter((element)=>{return element.length!==0}).length} Minutes to read </p>
                 <h3> Preview </h3>
                 <p>{text.length>0?text:'Enter Something to preview !'}</p>
             </div>
